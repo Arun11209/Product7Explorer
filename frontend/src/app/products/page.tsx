@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -43,7 +43,7 @@ interface PaginatedResponse {
   hasPrev: boolean;
 }
 
-export default function ProductsPage() {
+function ProductsContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const categoryId = searchParams.get('categoryId');
@@ -453,5 +453,44 @@ export default function ProductsPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function ProductsPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50">
+        <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+          {/* Header Skeleton */}
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-6">
+              <div className="h-8 bg-gray-200 rounded w-1/4"></div>
+              <div className="flex space-x-4">
+                <div className="h-10 bg-gray-200 rounded w-24"></div>
+                <div className="h-10 bg-gray-200 rounded w-32"></div>
+              </div>
+            </div>
+            <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+          </div>
+
+          {/* Products Grid Skeleton */}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {[...Array(24)].map((_, i) => (
+              <div key={i} className="bg-white rounded-lg shadow-sm p-6 animate-pulse">
+                <div className="aspect-w-3 aspect-h-4 bg-gray-200 rounded-lg mb-4"></div>
+                <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                <div className="h-3 bg-gray-200 rounded w-2/3 mb-3"></div>
+                <div className="flex items-center justify-between">
+                  <div className="h-4 bg-gray-200 rounded w-16"></div>
+                  <div className="h-6 bg-gray-200 rounded w-20"></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    }>
+      <ProductsContent />
+    </Suspense>
   );
 }
