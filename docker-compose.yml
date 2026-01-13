@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: product-explorer-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: product-explorer
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./docker/mongo-init:/docker-entrypoint-initdb.d
+    networks:
+      - product-explorer
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: product-explorer-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - product-explorer
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: product-explorer-backend
+    restart: unless-stopped
+    environment:
+      MONGODB_URI: mongodb://admin:password@mongodb:27017/product-explorer?authSource=admin
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      WORLD_OF_BOOKS_BASE_URL: https://www.worldofbooks.com
+      PORT: 3001
+      NODE_ENV: development
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongodb
+      - redis
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - product-explorer
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: product-explorer-frontend
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3001
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    networks:
+      - product-explorer
+
+volumes:
+  mongodb_data:
+  redis_data:
+
+networks:
+  product-explorer:
+    driver: bridge

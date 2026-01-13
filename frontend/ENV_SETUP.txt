@@ -1,0 +1,8 @@
+# Frontend Environment Setup
+# Create a file named .env.local in the frontend directory with this content:
+
+# API Configuration
+NEXT_PUBLIC_API_URL=http://localhost:3001
+
+# For production, change to:
+# NEXT_PUBLIC_API_URL=https://your-backend-api.com

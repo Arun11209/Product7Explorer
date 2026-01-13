@@ -1,0 +1,5 @@
+{"location":"main.ts:7","message":"Bootstrap started","data":{"currentPid":10120,"targetPort":"3002","envPort":"3002"},"timestamp":1768284328347,"sessionId":"debug-session","runId":"run1","hypothesisId":"A"}
+{"location":"main.ts:7","message":"Bootstrap started","data":{"currentPid":4360,"targetPort":"3002","envPort":"3002"},"timestamp":1768284487995,"sessionId":"debug-session","runId":"run1","hypothesisId":"A"}
+{"location":"main.ts:7","message":"Bootstrap started","data":{"currentPid":6276,"targetPort":"3002","envPort":"3002"},"timestamp":1768284839681,"sessionId":"debug-session","runId":"run1","hypothesisId":"A"}
+{"location":"main.ts:25","message":"Attempting to listen on port","data":{"currentPid":6276,"targetPort":"3002"},"timestamp":1768284840856,"sessionId":"debug-session","runId":"run1","hypothesisId":"B"}
+{"location":"main.ts:30","message":"Successfully listening on port","data":{"currentPid":6276,"targetPort":"3002"},"timestamp":1768284843398,"sessionId":"debug-session","runId":"run1","hypothesisId":"C"}

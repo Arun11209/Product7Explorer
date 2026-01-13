@@ -1,0 +1,18 @@
+# Database Configuration
+MONGODB_URI=mongodb://localhost:27017/product-explorer
+
+# Redis Configuration (for job queuing)
+REDIS_HOST=localhost
+REDIS_PORT=6379
+
+# World of Books Target
+WORLD_OF_BOOKS_BASE_URL=https://www.worldofbooks.com
+
+# Server Configuration
+PORT=3001
+NODE_ENV=development
+
+# Scraping Configuration (Optional - currently hardcoded)
+SCRAPING_CONCURRENCY=2
+SCRAPING_TIMEOUT=30000
+SCRAPING_MAX_RETRIES=3
